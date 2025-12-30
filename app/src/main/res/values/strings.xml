@@ -18,4 +18,8 @@
     <string name="lemon3_cd">Glass of lemonade</string>
     <string name="lemon4_cd">Empty glass</string>
 
+    <string name="calculate_tip">Calculate Tip</string>
+    <string name="bill_amount">Bill Amount</string>
+    <string name="tip_amount">Tip Amount: %s</string>
+
 </resources>
