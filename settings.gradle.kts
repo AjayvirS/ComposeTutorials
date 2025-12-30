@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "PhotoTagger"
+rootProject.name = "ComposeTutorials"
 include(":app")

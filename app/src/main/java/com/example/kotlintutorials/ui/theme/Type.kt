@@ -1,4 +1,4 @@
-package com.example.phototagger.ui.theme
+package com.example.kotlintutorials.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

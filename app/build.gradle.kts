@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.phototagger"
+    namespace = "com.example.kotlintutorials"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.phototagger"
+        applicationId = "com.example.kotlintutorials"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

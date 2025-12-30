@@ -1,4 +1,4 @@
-package com.example.phototagger
+package com.example.kotlintutorials
 
 import org.junit.Test
 
