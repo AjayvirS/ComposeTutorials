@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +19,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,10 +33,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.text.style.TextAlign.Companion.Justify
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,8 +52,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             KotlinTutorialsTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     //ComposeArticle(modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars))
                     //CompletedTasks(modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars))
@@ -85,7 +90,8 @@ fun CompletedTasks(modifier: Modifier = Modifier) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = image, contentDescription = null, modifier = modifier)
             Text(
-                text = stringResource(R.string.all_tasks_completed), fontWeight = FontWeight.Bold,
+                text = stringResource(R.string.all_tasks_completed),
+                fontWeight = FontWeight.Bold,
                 modifier = modifier.padding(top = 24.dp, bottom = 8.dp)
             )
             Text(text = stringResource(R.string.nice_work), fontSize = 16.sp)
@@ -100,9 +106,7 @@ fun ComposeArticle(modifier: Modifier = Modifier) {
 
         Column {
             Image(
-                painter = image,
-                contentDescription = null,
-                modifier = modifier.fillMaxWidth()
+                painter = image, contentDescription = null, modifier = modifier.fillMaxWidth()
             )
             Text(
                 text = stringResource(R.string.jetpack_compose_tutorial),
@@ -110,12 +114,9 @@ fun ComposeArticle(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(16.dp)
             )
             Text(
-                text = stringResource(R.string.text1),
-                modifier = Modifier.padding(
-                    start = 16.dp,
-                    end = 16.dp
-                ),
-                textAlign = Justify
+                text = stringResource(R.string.text1), modifier = Modifier.padding(
+                    start = 16.dp, end = 16.dp
+                ), textAlign = Justify
             )
             Text(
                 text = stringResource(R.string.text2),
@@ -179,9 +180,7 @@ fun InfoCard(title: String, message: String, bgColor: Color, modifier: Modifier 
             .padding(16.dp)
     ) {
         Text(
-            text = title,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            text = title, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 16.dp)
         )
         Text(text = message, textAlign = Justify)
 
@@ -193,15 +192,17 @@ fun InfoCard(title: String, message: String, bgColor: Color, modifier: Modifier 
 fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
     var result by remember { mutableStateOf(1) }
 
-    val imageResource = when (result){
+    val imageResource = when (result) {
         1 -> R.drawable.dice_1
         2 -> R.drawable.dice_2
         3 -> R.drawable.dice_3
         4 -> R.drawable.dice_4
         5 -> R.drawable.dice_5
-        else -> {R.drawable.dice_6}
+        else -> {
+            R.drawable.dice_6
+        }
     }
-    Column(modifier=modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Image(painterResource(imageResource), contentDescription = null)
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
@@ -212,12 +213,121 @@ fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
     }
 }
 
+//@Preview(showBackground = true)
+//@Composable
+//fun DiceRollerApp() {
+//    DiceWithButtonAndImage(
+//        modifier = Modifier.fillMaxSize()
+//            .wrapContentSize(Alignment.Center)
+//    )
+//}
+
 @Preview(showBackground = true)
 @Composable
-fun DiceRollerApp() {
-    DiceWithButtonAndImage(
-        modifier = Modifier.fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+fun LemonMakerApp() {
+    LemonMaker(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
+            .wrapContentSize(Alignment.TopCenter)
     )
 }
+
+@Composable
+fun LemonMaker(modifier: Modifier = Modifier) {
+    var currView by remember {
+        mutableStateOf(0)
+    }
+    var squeezeCount by remember { mutableStateOf(0) }
+    Column(modifier = modifier) {
+        Row(
+            modifier = Modifier
+                .background(color = Color.Yellow)
+                .weight(1f)
+        ) {
+            Text(
+                text = "Lemonade",
+                fontWeight = Bold,
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                textAlign = Center
+            )
+        }
+        Row(modifier = Modifier.weight(10f), verticalAlignment = Alignment.CenterVertically) {
+            val executeStep = {
+                if (currView == 0) {
+                    squeezeCount = (2..4).random()
+                }
+                currView = (currView + 1) % 4
+            }
+            val squeezeStep = {
+                squeezeCount--
+                if (squeezeCount == 0) {
+                    currView = (currView + 1) % 4
+                }
+            }
+            when (currView) {
+                0 -> LemonadeView(
+                    text = stringResource(R.string.lemon1),
+                    painterResource = painterResource(R.drawable.lemon_tree), executeStep
+                )
+
+                1 -> {
+                    LemonadeView(
+                        text = stringResource(R.string.lemon2),
+                        painterResource = painterResource(R.drawable.lemon_squeeze), squeezeStep
+                    )
+                }
+
+                2 -> LemonadeView(
+                    text = stringResource(R.string.lemon3),
+                    painterResource = painterResource(R.drawable.lemon_drink), executeStep
+                )
+
+                3 -> LemonadeView(
+                    text = stringResource(R.string.lemon4),
+                    painterResource = painterResource(R.drawable.lemon_restart), executeStep
+                )
+
+            }
+        }
+    }
+
+
+}
+
+@Composable
+fun LemonadeView(
+    text: String,
+    painterResource: Painter,
+    executeStep: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
+
+        Button(
+            onClick = {
+                executeStep()
+            },
+            shape = RoundedCornerShape(25),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Green.copy(alpha = 0.2f)
+            ),
+        ) {
+            Image(
+                painter = painterResource, contentDescription = null, Modifier.padding(16.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(text = text, fontSize = 18.sp)
+    }
+
+}
+
 
