@@ -2,6 +2,7 @@ package com.example.kotlintutorials.navigation
 
 import CompletedTasks
 import com.example.kotlintutorials.R
+import com.example.kotlintutorials.ui.screens.artspace.ArtSpaceLayout
 import com.example.kotlintutorials.ui.screens.dice.DiceWithButtonAndImage
 import com.example.kotlintutorials.ui.screens.greetings.GreetingText
 import com.example.kotlintutorials.ui.screens.lemonade.LemonMaker
@@ -17,6 +18,7 @@ object DemoRegistry {
         DemoDestination("tasks", R.string.title_tasks) { CompletedTasks() },
         DemoDestination("dice", R.string.title_dice) { DiceWithButtonAndImage() },
         DemoDestination("lemonade", R.string.title_lemonade) { LemonMaker() },
-        DemoDestination("tiptime", R.string.title_tip) { TipTimeLayout() }
+        DemoDestination("tiptime", R.string.title_tip) { TipTimeLayout() },
+        DemoDestination("artwork", R.string.title_artwork) { ArtSpaceLayout() }
     )
 }

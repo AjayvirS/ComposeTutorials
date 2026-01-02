@@ -34,7 +34,7 @@ fun KotlinTutorialsApp() {
     // if we navigate away (Composable is destroyed) then scope cancels everything after
     val scope = rememberCoroutineScope()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route
+    val currentRoute = backStackEntry?.destination?.route ?: "artwork"
     val demos = DemoRegistry.demos
     val currentTitle = demos.firstOrNull() {
         it.route == currentRoute
