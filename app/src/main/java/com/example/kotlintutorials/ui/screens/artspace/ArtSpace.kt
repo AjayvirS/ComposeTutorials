@@ -14,6 +14,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlintutorials.R
+import com.example.kotlintutorials.ui.components.LocalImageViewModel
 
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
@@ -64,6 +68,8 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
 
 @Composable
 fun ArtworkController(modifier: Modifier = Modifier) {
+    val myViewModel = LocalImageViewModel.current
+
     Row(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             Button(
@@ -79,6 +85,22 @@ fun ArtworkController(modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Previous"
+                )
+            }
+
+            Button(
+                onClick = {
+
+                },
+                shape = RoundedCornerShape(50),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Green.copy(alpha=0.4f)
+                ),
+                elevation = ButtonDefaults.buttonElevation(12.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "Save Image"
                 )
             }
 

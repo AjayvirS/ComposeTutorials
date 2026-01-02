@@ -1,13 +1,12 @@
 package com.example.kotlintutorials.ui.components
 
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlintutorials.data.ImageRepository
-import com.example.kotlintutorials.data.local.LocalFileManager
 import kotlinx.coroutines.launch
 
 class ImageViewModel(
-    private val fileManager: LocalFileManager,
     private val imgRepo: ImageRepository
 ) : ViewModel() {
 
@@ -16,4 +15,8 @@ class ImageViewModel(
             imgRepo.saveImage(drawableId = drawableId, title = title)
         }
     }
+}
+
+val LocalImageViewModel = staticCompositionLocalOf<ImageViewModel> {
+    error("No ImageViewModel provided")
 }

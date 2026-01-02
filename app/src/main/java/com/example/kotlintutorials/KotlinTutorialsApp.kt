@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.kotlintutorials.navigation.AppNavHost
 import com.example.kotlintutorials.navigation.DemoRegistry
+import com.example.kotlintutorials.ui.components.ImageViewModel
 import com.example.kotlintutorials.ui.screens.DrawerList
 import kotlinx.coroutines.launch
 
