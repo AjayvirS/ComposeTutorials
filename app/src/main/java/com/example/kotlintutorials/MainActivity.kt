@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,6 +55,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlintutorials.ui.theme.KotlinTutorialsTheme
+import org.jetbrains.annotations.VisibleForTesting
 import java.text.NumberFormat
 import kotlin.math.ceil
 
@@ -352,7 +351,7 @@ fun TipTimeLayout() {
         mutableStateOf("0")
     }
     var tipPercInput by remember {
-        mutableStateOf("0")
+        mutableStateOf("")
     }
     var roundUp by remember {
         mutableStateOf(false)
@@ -391,7 +390,7 @@ fun TipTimeLayout() {
         EditNumberField(
             value = tipPercInput,
             onValueChange = { tipPercInput = it },
-            label = R.string.tip_amount,
+            label = R.string.how_was_the_service,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
@@ -462,7 +461,8 @@ fun RoundTheTipRow(
  * according to the local currency.
  * Example would be "$10.00".
  */
-private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean = false): String {
+@VisibleForTesting
+internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boolean = false): String {
     val tip = when(roundUp) {
         false -> tipPercent / 100 * amount
         else -> ceil(tipPercent / 100 * amount)
