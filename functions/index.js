@@ -9,6 +9,7 @@
 
 const {setGlobalOptions} = require("firebase-functions");
 const {onRequest} = require("firebase-functions/https");
+const {GoogleGenAI} = require("@google/genai");
 const logger = require("firebase-functions/logger");
 
 // For cost control, you can set the maximum number of containers that can be
@@ -21,7 +22,7 @@ const logger = require("firebase-functions/logger");
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+setGlobalOptions({maxInstances: 5});
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -30,3 +31,47 @@ setGlobalOptions({ maxInstances: 10 });
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+const model = "gemini-2.5-flash";
+
+
+exports.annotateArtwork = onRequest({
+  region: "europe-west1", secrets: ["GEMINI_API_KEY"],
+}, async (req, res) => {
+  try {
+    if (req.method !== "POST") {
+      return res.status(405).json({error: "Only POST allowed"});
+    }
+    const {image64, mimeType, prompt} = req.body || {};
+    if (!image64 || !mimeType) {
+      return res.status(400).json({
+        error: "Missing or Broken Image," +
+          " please try again and upload a valid image.",
+      });
+    }
+
+    const instruction = prompt || "Write a concise title/caption of what you see in the image. " +
+      "If you are unsure, say so. \n" +
+      "Return JSON: {caption: string, objects: string[], confidence: 'low'|'medium'|'high'}.";
+
+    const result = await ai.models.generateContent({
+      model, contents: [{
+        role: "user",
+        parts: [
+          {text: instruction},
+          {
+            inlineData: {
+              mimeType, data: image64,
+            },
+          },
+        ],
+      }],
+    });
+    const text = result.text || "";
+    return result.json({raw: text});
+  } catch (e) {
+    logger.error(e);
+    return res.status(500).json({error: "500 Internal Error"});
+  }
+});
