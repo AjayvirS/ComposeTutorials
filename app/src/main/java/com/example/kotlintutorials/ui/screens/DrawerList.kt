@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kotlintutorials.navigation.DemoDestination
 
 @Composable
-fun HomeScreen(
+fun DrawerList(
     demos: List<DemoDestination>,
     currentRoute: String?,
     onNavigate: (DemoDestination) -> Unit,

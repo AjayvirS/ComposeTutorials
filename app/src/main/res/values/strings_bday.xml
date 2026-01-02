@@ -1,5 +1,5 @@
 <resources>
-    <string name="title">Birthday Card</string>
+    <string name="title_bday">Birthday Card</string>
     <string name="happy_birthday_text">Happy Birthday Sam!</string>
     <string name="signature">From Ajay</string>
 </resources>

@@ -1,4 +1,5 @@
 <resources>
+    <string name="title_lemonade">Make a Lemonade!</string>
     <string name="lemon1">Tap the lemon tree to select a lemon</string>
     <string name="lemon2">Keep tapping the lemon to squeeze it</string>
     <string name="lemon3">Tap the lemonade to drink it</string>
