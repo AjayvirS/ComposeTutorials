@@ -21,6 +21,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +36,12 @@ import com.example.kotlintutorials.R
 
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
+    val artworks = remember { listOf(R.drawable.india1, R.drawable.india2, R.drawable.india3,
+        R.drawable.india4, R.drawable.india5, R.drawable.india6, R.drawable.india7, R.drawable.india7,
+        R.drawable.india8, R.drawable.india9) }
+
+    var index = remember { mutableIntStateOf(0) }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -46,7 +54,7 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            ArtworkWall(modifier = Modifier.weight(3f))
+            ArtworkWall(modifier = Modifier.weight(3f), currArtwork = artworks[index.value])
             ArtworkDescriptor(modifier = Modifier.weight(1f))
             ArtworkController(modifier = Modifier.weight(1f))
         }
@@ -59,7 +67,9 @@ fun ArtworkController(modifier: Modifier = Modifier) {
     Row(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             Button(
-                onClick = {},
+                onClick = {
+
+                },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -103,7 +113,7 @@ fun ArtworkDescriptor(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ArtworkWall(modifier: Modifier = Modifier) {
+fun ArtworkWall(modifier: Modifier = Modifier, currArtwork: Int) {
     Row(modifier = modifier) {
         Surface(
             shape = RoundedCornerShape(12.dp),
@@ -111,7 +121,7 @@ fun ArtworkWall(modifier: Modifier = Modifier) {
             shadowElevation = 20.dp
         ) {
             Image(
-                painterResource(R.drawable.india1),
+                painterResource(currArtwork),
                 contentDescription = null,
                 Modifier
                     .clip(RoundedCornerShape(16.dp))
