@@ -3,7 +3,10 @@ package com.example.kotlintutorials.ui.screens.dice
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.kotlintutorials.R
 
 @Composable
-fun DiceWithButtonAndImage(modifier: Modifier = Modifier) {
+fun DiceWithButtonAndImage(modifier: Modifier = Modifier.fillMaxSize()) {
     var result by remember { mutableStateOf(1) }
 
     val imageResource = when (result) {

@@ -1,6 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.example.kotlintutorials.R
 
 @Composable
-fun CompletedTasks(modifier: Modifier = Modifier) {
+fun CompletedTasks(modifier: Modifier = Modifier.fillMaxWidth() ) {
     val image = painterResource(R.drawable.completed)
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -22,7 +23,7 @@ fun CompletedTasks(modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(R.string.all_tasks_completed),
                 fontWeight = FontWeight.Bold,
-                modifier = modifier.padding(top = 24.dp, bottom = 8.dp)
+                modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
             )
             Text(text = stringResource(R.string.nice_work), fontSize = 16.sp)
         }
