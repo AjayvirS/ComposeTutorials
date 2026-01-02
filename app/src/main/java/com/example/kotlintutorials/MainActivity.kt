@@ -65,12 +65,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             KotlinTutorialsTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    //ComposeArticle(modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars))
-                    //CompletedTasks(modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars))
-                    ComposeQuadrant(modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars))
-
+                    KotlinTutorialsApp()
                 }
             }
         }

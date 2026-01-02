@@ -1,4 +1,9 @@
 package com.example.kotlintutorials
 
-class KotlinTutorialsApp {
+import androidx.compose.runtime.Composable
+import com.example.kotlintutorials.navigation.AppNavHost
+
+@Composable
+fun KotlinTutorialsApp() {
+    AppNavHost()
 }
