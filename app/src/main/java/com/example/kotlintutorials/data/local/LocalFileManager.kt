@@ -1,20 +1,24 @@
 package com.example.kotlintutorials.data.local
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.net.Uri
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
+import javax.inject.Inject
 
-class LocalFileManager(private val context: Context) {
+class LocalFileManager @Inject constructor(@ApplicationContext private val context: Context) {
 
-    fun storeImage(drawableId: Int, filename: String): String? {
-        val bitmap = BitmapFactory.decodeResource(context.resources, drawableId)
+    fun storeImage(uriString: String, filename: String): String? {
+        val uri = Uri.parse(uriString)
         val file = File(context.filesDir, filename)
+
         return try {
-            file.outputStream().use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                file.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
             }
-            file.absolutePath
+            Uri.fromFile(file).toString()
         } catch (e: Exception) {
             e.printStackTrace()
             null

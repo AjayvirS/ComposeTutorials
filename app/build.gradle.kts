@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation)
+    implementation(libs.coil)
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.constraintlayout)

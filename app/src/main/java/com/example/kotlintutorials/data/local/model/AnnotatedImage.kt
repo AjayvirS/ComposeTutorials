@@ -9,5 +9,6 @@ data class AnnotatedImage(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val imagePath: String,
+    val imageSource: String,
     val timestamp: Long = System.currentTimeMillis()
 )

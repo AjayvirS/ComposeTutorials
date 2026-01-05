@@ -9,25 +9,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import com.example.kotlintutorials.data.ImageRepository
-import com.example.kotlintutorials.data.local.AppDatabase
-import com.example.kotlintutorials.data.local.LocalFileManager
-import com.example.kotlintutorials.ui.components.ArtSpaceViewModel
-import com.example.kotlintutorials.ui.components.LocalArtSpaceViewModel
 import com.example.kotlintutorials.ui.theme.KotlinTutorialsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterial3Api
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val appContext = applicationContext
-        val fileManager = LocalFileManager(appContext)
-        val db = AppDatabase.getDatabase(appContext)
-        val repo = ImageRepository(fileManager, db.imageDao())
-        val viewModel = ArtSpaceViewModel( repo)
         setContent {
             KotlinTutorialsTheme {
-                CompositionLocalProvider(LocalArtSpaceViewModel provides viewModel) {
+                CompositionLocalProvider {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
