@@ -14,9 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -24,8 +22,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +37,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlintutorials.R
-import com.example.kotlintutorials.ui.components.LocalImageViewModel
+import com.example.kotlintutorials.ui.components.LocalArtSpaceViewModel
 
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
@@ -60,21 +61,28 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         ) {
             ArtworkWall(modifier = Modifier.weight(3f), currArtwork = artworks[index.value])
             ArtworkDescriptor(modifier = Modifier.weight(1f))
-            ArtworkController(modifier = Modifier.weight(1f))
+            ArtworkController(drawableId = artworks[index.value], modifier = Modifier.weight(1f))
         }
 
     }
 }
 
 @Composable
-fun ArtworkController(modifier: Modifier = Modifier) {
-    val myViewModel = LocalImageViewModel.current
+fun ArtworkController(drawableId: Int, modifier: Modifier = Modifier) {
+    val myImageViewModel = LocalArtSpaceViewModel.current
+    var isSaved by remember { mutableStateOf(false) }
+
 
     Row(modifier = modifier) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
             Button(
                 onClick = {
 
+                    myImageViewModel.onSaveRequested(
+                        drawableId = drawableId,
+                        title = "TODO()"
+                    )
+                    isSaved = !isSaved
                 },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
@@ -94,7 +102,7 @@ fun ArtworkController(modifier: Modifier = Modifier) {
                 },
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Green.copy(alpha=0.4f)
+                    containerColor = Color.Transparent
                 ),
                 elevation = ButtonDefaults.buttonElevation(12.dp)
             ) {
