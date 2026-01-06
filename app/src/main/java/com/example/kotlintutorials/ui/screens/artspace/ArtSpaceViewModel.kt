@@ -31,12 +31,13 @@ class ArtSpaceViewModel @Inject constructor(
 
     fun onSaveRequested(imagePath: String) {
         viewModelScope.launch {
-            //TODO: here we make a call to llm service to generate a title
-            if(uiState.value.generatedTitle == null){
-
+            _uiState.update {
+                it.copy(generatedTitle = "Generating AI title...")
             }
-            imgRepo.saveImage(uri=imagePath, title = "title")
-            _uiState.value = _uiState.value.copy(isSaved = true)
+
+            val aiTitle = imgRepo.generateAiTitle(imagePath)
+            imgRepo.saveImage(uri=imagePath, title = aiTitle)
+            updateStateForCurrentIndex()
         }
     }
 

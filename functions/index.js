@@ -53,7 +53,7 @@ exports.annotateArtwork = onRequest({
 
     const instruction = prompt || "Write a concise title/caption of what you see in the image. " +
       "If you are unsure, say so. \n" +
-      "Return JSON: {caption: string, objects: string[], confidence: 'low'|'medium'|'high'}.";
+      "Return a simple text (string), do not reference the fact that it is a photograph about..., just a short caption is fine";
 
     const result = await ai.models.generateContent({
       model, contents: [{
@@ -69,7 +69,7 @@ exports.annotateArtwork = onRequest({
       }],
     });
     const text = result.text || "";
-    return result.json({raw: text});
+    return res.status(200).json({raw: text});
   } catch (e) {
     logger.error(e);
     return res.status(500).json({error: "500 Internal Error"});

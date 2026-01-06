@@ -1,10 +1,14 @@
 package com.example.kotlintutorials.data
 
 import android.content.Context
+import android.net.Uri
+import android.util.Base64
 import com.example.kotlintutorials.R
 import com.example.kotlintutorials.data.local.ImageDao
 import com.example.kotlintutorials.data.local.LocalFileManager
 import com.example.kotlintutorials.data.local.model.AnnotatedImage
+import com.example.kotlintutorials.data.remote.NetworkModule
+import com.example.kotlintutorials.data.remote.dto.AnnotatedImageRequest
 import com.example.kotlintutorials.model.Artwork
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -60,6 +64,25 @@ class ImageRepository @Inject constructor(
 
     suspend fun getSavedRecordByUri(sourcePath: String): AnnotatedImage? = withContext(Dispatchers.IO) {
         return@withContext imageDao.findRecordBySource(sourcePath)
+    }
+
+    suspend fun generateAiTitle(imageUri: String): String{
+        return withContext(Dispatchers.IO){
+            try {
+                val inputStream = context.contentResolver.openInputStream(Uri.parse(imageUri))
+                val bytes = inputStream?.readBytes() ?: return@withContext "Untitled"
+                val base64Image = Base64.encodeToString(bytes, Base64.NO_WRAP)
+
+                val response = NetworkModule.geminiFunctionsApi.annotateArtworkFromImage(
+                    AnnotatedImageRequest(image64 = base64Image, mimeType = "image/jpeg")
+                )
+
+                response.raw
+            } catch (e: Exception){
+                null
+                "Error generating title"
+            }
+        }
     }
 
 
